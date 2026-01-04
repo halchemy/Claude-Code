@@ -22,7 +22,8 @@ export function TodoModal({ date, onClose }: TodoModalProps) {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [dueDate, setDueDate] = useState(formatDateForInput(date));
-  const [dueTime, setDueTime] = useState('09:00');
+  const [startTime, setStartTime] = useState('09:00');
+  const [endTime, setEndTime] = useState('10:00');
   const [priority, setPriority] = useState<Priority>('medium');
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -33,7 +34,8 @@ export function TodoModal({ date, onClose }: TodoModalProps) {
       title: title.trim(),
       description: description.trim(),
       dueDate,
-      dueTime,
+      startTime,
+      endTime,
       priority,
       completed: false,
     });
@@ -76,26 +78,38 @@ export function TodoModal({ date, onClose }: TodoModalProps) {
             />
           </div>
 
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              日付
+            </label>
+            <input
+              type="date"
+              value={dueDate}
+              onChange={(e) => setDueDate(e.target.value)}
+              className="w-full px-4 py-2 rounded-xl border-2 border-gray-200 focus:border-violet-400 focus:outline-none transition-colors"
+            />
+          </div>
+
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                日付
+                開始時刻
               </label>
               <input
-                type="date"
-                value={dueDate}
-                onChange={(e) => setDueDate(e.target.value)}
+                type="time"
+                value={startTime}
+                onChange={(e) => setStartTime(e.target.value)}
                 className="w-full px-4 py-2 rounded-xl border-2 border-gray-200 focus:border-violet-400 focus:outline-none transition-colors"
               />
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                時間
+                終了時刻
               </label>
               <input
                 type="time"
-                value={dueTime}
-                onChange={(e) => setDueTime(e.target.value)}
+                value={endTime}
+                onChange={(e) => setEndTime(e.target.value)}
                 className="w-full px-4 py-2 rounded-xl border-2 border-gray-200 focus:border-violet-400 focus:outline-none transition-colors"
               />
             </div>

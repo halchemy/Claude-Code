@@ -5,7 +5,8 @@ export interface Todo {
   title: string;
   description: string;
   dueDate: string;
-  dueTime: string;
+  startTime: string;
+  endTime: string;
   priority: Priority;
   completed: boolean;
   createdAt: string;

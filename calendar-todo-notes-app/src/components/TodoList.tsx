@@ -30,7 +30,8 @@ export function TodoList() {
     title: '',
     description: '',
     dueDate: formatDateForInput(new Date()),
-    dueTime: '09:00',
+    startTime: '09:00',
+    endTime: '10:00',
     priority: 'medium' as Priority,
   });
 
@@ -45,7 +46,7 @@ export function TodoList() {
         const priorityOrder = { high: 0, medium: 1, low: 2 };
         return priorityOrder[a.priority] - priorityOrder[b.priority];
       }
-      return new Date(a.dueDate + ' ' + a.dueTime).getTime() - new Date(b.dueDate + ' ' + b.dueTime).getTime();
+      return new Date(a.dueDate + ' ' + a.startTime).getTime() - new Date(b.dueDate + ' ' + b.startTime).getTime();
     });
 
   const handleAddTodo = () => {
@@ -62,7 +63,8 @@ export function TodoList() {
       title: '',
       description: '',
       dueDate: formatDateForInput(new Date()),
-      dueTime: '09:00',
+      startTime: '09:00',
+      endTime: '10:00',
       priority: 'medium',
     });
     setIsAdding(false);
@@ -128,19 +130,28 @@ export function TodoList() {
               rows={2}
               className="w-full px-4 py-2 rounded-xl border-2 border-gray-200 focus:border-cyan-400 focus:outline-none resize-none"
             />
-            <div className="flex flex-wrap gap-3">
+            <div className="flex flex-wrap gap-3 items-center">
               <input
                 type="date"
                 value={newTodo.dueDate}
                 onChange={(e) => setNewTodo({ ...newTodo, dueDate: e.target.value })}
                 className="px-3 py-2 rounded-xl border-2 border-gray-200 focus:border-cyan-400 focus:outline-none"
               />
-              <input
-                type="time"
-                value={newTodo.dueTime}
-                onChange={(e) => setNewTodo({ ...newTodo, dueTime: e.target.value })}
-                className="px-3 py-2 rounded-xl border-2 border-gray-200 focus:border-cyan-400 focus:outline-none"
-              />
+              <div className="flex items-center gap-1">
+                <input
+                  type="time"
+                  value={newTodo.startTime}
+                  onChange={(e) => setNewTodo({ ...newTodo, startTime: e.target.value })}
+                  className="px-3 py-2 rounded-xl border-2 border-gray-200 focus:border-cyan-400 focus:outline-none"
+                />
+                <span className="text-gray-500">〜</span>
+                <input
+                  type="time"
+                  value={newTodo.endTime}
+                  onChange={(e) => setNewTodo({ ...newTodo, endTime: e.target.value })}
+                  className="px-3 py-2 rounded-xl border-2 border-gray-200 focus:border-cyan-400 focus:outline-none"
+                />
+              </div>
               <div className="flex gap-1">
                 {(['high', 'medium', 'low'] as Priority[]).map((p) => (
                   <button
@@ -211,7 +222,8 @@ function TodoItem({
     title: todo.title,
     description: todo.description,
     dueDate: todo.dueDate,
-    dueTime: todo.dueTime,
+    startTime: todo.startTime,
+    endTime: todo.endTime,
     priority: todo.priority,
   });
 
@@ -222,11 +234,11 @@ function TodoItem({
     setIsEditing(false);
   };
 
-  const formatDisplayDate = (dateStr: string, timeStr: string) => {
+  const formatDisplayDate = (dateStr: string, startTime: string, endTime: string) => {
     const date = new Date(dateStr);
     const month = date.getMonth() + 1;
     const day = date.getDate();
-    return `${month}/${day} ${timeStr}`;
+    return `${month}/${day} ${startTime}〜${endTime}`;
   };
 
   if (isEditing) {
@@ -244,19 +256,28 @@ function TodoItem({
           rows={2}
           className="w-full px-4 py-2 rounded-xl border-2 border-gray-200 focus:border-cyan-400 focus:outline-none resize-none"
         />
-        <div className="flex flex-wrap gap-3">
+        <div className="flex flex-wrap gap-3 items-center">
           <input
             type="date"
             value={editData.dueDate}
             onChange={(e) => setEditData({ ...editData, dueDate: e.target.value })}
             className="px-3 py-2 rounded-xl border-2 border-gray-200 focus:border-cyan-400 focus:outline-none"
           />
-          <input
-            type="time"
-            value={editData.dueTime}
-            onChange={(e) => setEditData({ ...editData, dueTime: e.target.value })}
-            className="px-3 py-2 rounded-xl border-2 border-gray-200 focus:border-cyan-400 focus:outline-none"
-          />
+          <div className="flex items-center gap-1">
+            <input
+              type="time"
+              value={editData.startTime}
+              onChange={(e) => setEditData({ ...editData, startTime: e.target.value })}
+              className="px-3 py-2 rounded-xl border-2 border-gray-200 focus:border-cyan-400 focus:outline-none"
+            />
+            <span className="text-gray-500">〜</span>
+            <input
+              type="time"
+              value={editData.endTime}
+              onChange={(e) => setEditData({ ...editData, endTime: e.target.value })}
+              className="px-3 py-2 rounded-xl border-2 border-gray-200 focus:border-cyan-400 focus:outline-none"
+            />
+          </div>
           <div className="flex gap-1">
             {(['high', 'medium', 'low'] as Priority[]).map((p) => (
               <button
@@ -331,7 +352,7 @@ function TodoItem({
             <p className="text-sm text-gray-500 mt-1">{todo.description}</p>
           )}
           <p className="text-xs text-gray-400 mt-2">
-            📅 {formatDisplayDate(todo.dueDate, todo.dueTime)}
+            📅 {formatDisplayDate(todo.dueDate, todo.startTime, todo.endTime)}
           </p>
         </div>
 
