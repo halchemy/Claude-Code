@@ -1,0 +1,51 @@
+@import "tailwindcss";
+
+@theme {
+  --font-family-display: "Nunito", "M PLUS Rounded 1c", system-ui, sans-serif;
+  --color-primary: #7c3aed;
+  --color-secondary: #06b6d4;
+  --color-accent: #f472b6;
+  --color-priority-high: #ef4444;
+  --color-priority-medium: #eab308;
+  --color-priority-low: #22c55e;
+}
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    font-family: var(--font-family-display);
+    background: linear-gradient(135deg, #fdf4ff 0%, #fae8ff 50%, #e0f2fe 100%);
+    min-height: 100vh;
+  }
+
+  #root {
+    min-height: 100vh;
+  }
+}
+
+@layer components {
+  .pop-shadow {
+    box-shadow: 0 4px 0 rgba(0, 0, 0, 0.15), 0 6px 20px rgba(0, 0, 0, 0.1);
+  }
+
+  .pop-shadow-sm {
+    box-shadow: 0 2px 0 rgba(0, 0, 0, 0.1), 0 4px 12px rgba(0, 0, 0, 0.08);
+  }
+
+  .pop-button {
+    transition: all 0.15s ease;
+    transform: translateY(0);
+  }
+
+  .pop-button:hover {
+    transform: translateY(-2px);
+  }
+
+  .pop-button:active {
+    transform: translateY(2px);
+  }
+}
