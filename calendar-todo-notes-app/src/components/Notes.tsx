@@ -3,12 +3,11 @@ import { useApp } from '../store';
 import type { Note } from '../types';
 
 export function Notes() {
-  const { notes, todos, addNote, updateNote, deleteNote } = useApp();
+  const { notes, addNote, updateNote, deleteNote } = useApp();
   const [isAdding, setIsAdding] = useState(false);
   const [newNote, setNewNote] = useState({
     title: '',
     content: '',
-    todoId: null as string | null,
   });
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -24,17 +23,11 @@ export function Notes() {
     addNote({
       title: newNote.title.trim() || '無題のメモ',
       content: newNote.content.trim(),
-      todoId: newNote.todoId,
+      todoId: null,
     });
 
-    setNewNote({ title: '', content: '', todoId: null });
+    setNewNote({ title: '', content: '' });
     setIsAdding(false);
-  };
-
-  const getTodoTitle = (todoId: string | null) => {
-    if (!todoId) return null;
-    const todo = todos.find((t) => t.id === todoId);
-    return todo?.title || null;
   };
 
   return (
@@ -77,25 +70,6 @@ export function Notes() {
               rows={5}
               className="w-full px-4 py-2 rounded-xl border-2 border-gray-200 focus:border-pink-400 focus:outline-none resize-none"
             />
-            <div>
-              <label className="block text-sm font-medium text-gray-600 mb-1">
-                Todoに紐づける（任意）
-              </label>
-              <select
-                value={newNote.todoId || ''}
-                onChange={(e) => setNewNote({ ...newNote, todoId: e.target.value || null })}
-                className="w-full px-4 py-2 rounded-xl border-2 border-gray-200 focus:border-pink-400 focus:outline-none bg-white"
-              >
-                <option value="">紐づけなし</option>
-                {todos
-                  .filter((t) => !t.completed)
-                  .map((todo) => (
-                    <option key={todo.id} value={todo.id}>
-                      {todo.title}
-                    </option>
-                  ))}
-              </select>
-            </div>
             <div className="flex gap-2 pt-4">
               <button
                 onClick={handleAddNote}
@@ -107,7 +81,7 @@ export function Notes() {
               <button
                 onClick={() => {
                   setIsAdding(false);
-                  setNewNote({ title: '', content: '', todoId: null });
+                  setNewNote({ title: '', content: '' });
                 }}
                 className="pop-button px-4 py-2 bg-gray-100 text-gray-700 rounded-xl font-medium"
               >
@@ -132,10 +106,8 @@ export function Notes() {
               <NoteCard
                 key={note.id}
                 note={note}
-                linkedTodoTitle={getTodoTitle(note.todoId)}
                 onUpdate={updateNote}
                 onDelete={deleteNote}
-                todos={todos}
               />
             ))}
           </div>
@@ -149,22 +121,17 @@ export function Notes() {
 
 function NoteCard({
   note,
-  linkedTodoTitle,
   onUpdate,
   onDelete,
-  todos,
 }: {
   note: Note;
-  linkedTodoTitle: string | null;
   onUpdate: (id: string, updates: Partial<Note>) => void;
   onDelete: (id: string) => void;
-  todos: { id: string; title: string; completed: boolean }[];
 }) {
   const [isEditing, setIsEditing] = useState(false);
   const [editData, setEditData] = useState({
     title: note.title,
     content: note.content,
-    todoId: note.todoId,
   });
 
   const handleSave = () => {
@@ -202,20 +169,6 @@ function NoteCard({
           rows={5}
           className="w-full px-4 py-2 rounded-xl border-2 border-gray-200 focus:border-pink-400 focus:outline-none resize-none"
         />
-        <select
-          value={editData.todoId || ''}
-          onChange={(e) => setEditData({ ...editData, todoId: e.target.value || null })}
-          className="w-full px-4 py-2 rounded-xl border-2 border-gray-200 focus:border-pink-400 focus:outline-none bg-white"
-        >
-          <option value="">紐づけなし</option>
-          {todos
-            .filter((t) => !t.completed)
-            .map((todo) => (
-              <option key={todo.id} value={todo.id}>
-                {todo.title}
-              </option>
-            ))}
-        </select>
         <div className="flex gap-2 pt-4">
           <button
             onClick={handleSave}
@@ -257,13 +210,6 @@ function NoteCard({
       </div>
 
       <p className="text-sm text-gray-600 whitespace-pre-wrap line-clamp-4">{note.content}</p>
-
-      {linkedTodoTitle && (
-        <div className="mt-3 flex items-center gap-1 text-xs text-violet-600 bg-violet-50 px-2 py-1 rounded-lg w-fit">
-          <span>🔗</span>
-          <span>{linkedTodoTitle}</span>
-        </div>
-      )}
 
       <p className="text-xs text-gray-400 mt-3">更新: {formatDate(note.updatedAt)}</p>
     </div>

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useApp } from '../store';
 import { TodoModal } from './TodoModal';
+import { DateTodoPopup } from './DateTodoPopup';
 
 const WEEKDAYS = ['日', '月', '火', '水', '木', '金', '土'];
 const MONTHS = [
@@ -48,6 +49,7 @@ export function Calendar() {
   const { selectedDate, setSelectedDate, todos } = useApp();
   const [viewDate, setViewDate] = useState(new Date());
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [selectedDateForTodo, setSelectedDateForTodo] = useState<Date | null>(null);
 
   const year = viewDate.getFullYear();
@@ -77,11 +79,19 @@ export function Calendar() {
 
   const handleDateClick = (date: Date) => {
     setSelectedDate(date);
+    setSelectedDateForTodo(date);
+    setIsPopupOpen(true);
   };
 
-  const handleDateDoubleClick = (date: Date) => {
-    setSelectedDateForTodo(date);
+  const handleAddTodoFromPopup = () => {
+    setIsPopupOpen(false);
     setIsModalOpen(true);
+  };
+
+  const getSelectedDateTodos = () => {
+    if (!selectedDateForTodo) return [];
+    const dateKey = formatDateKey(selectedDateForTodo);
+    return todosByDate[dateKey] || [];
   };
 
   const isToday = (date: Date) => {
@@ -159,7 +169,6 @@ export function Calendar() {
               <button
                 key={index}
                 onClick={() => handleDateClick(date)}
-                onDoubleClick={() => handleDateDoubleClick(date)}
                 className={`
                   pop-button relative min-h-[80px] p-2 rounded-xl text-left transition-all
                   ${!isCurrentMonth(date) ? 'opacity-40' : ''}
@@ -195,8 +204,19 @@ export function Calendar() {
       </div>
 
       <p className="text-center text-sm text-gray-500 mt-4">
-        ダブルクリックでTodoを追加
+        日付をクリックでTodo確認・追加
       </p>
+
+      {isPopupOpen && selectedDateForTodo && (
+        <DateTodoPopup
+          date={selectedDateForTodo}
+          todos={getSelectedDateTodos()}
+          onClose={() => {
+            setIsPopupOpen(false);
+          }}
+          onAddTodo={handleAddTodoFromPopup}
+        />
+      )}
 
       {isModalOpen && selectedDateForTodo && (
         <TodoModal
