@@ -96,7 +96,14 @@ export function Notes() {
                   ))}
               </select>
             </div>
-            <div className="flex gap-2">
+            <div className="flex gap-2 pt-4">
+              <button
+                onClick={handleAddNote}
+                disabled={!newNote.title.trim() && !newNote.content.trim()}
+                className="pop-button px-4 py-2 bg-gradient-to-r from-pink-500 to-rose-600 text-white rounded-xl font-medium disabled:opacity-50"
+              >
+                保存
+              </button>
               <button
                 onClick={() => {
                   setIsAdding(false);
@@ -105,13 +112,6 @@ export function Notes() {
                 className="pop-button px-4 py-2 bg-gray-100 text-gray-700 rounded-xl font-medium"
               >
                 キャンセル
-              </button>
-              <button
-                onClick={handleAddNote}
-                disabled={!newNote.title.trim() && !newNote.content.trim()}
-                className="pop-button px-4 py-2 bg-gradient-to-r from-pink-500 to-rose-600 text-white rounded-xl font-medium disabled:opacity-50"
-              >
-                保存
               </button>
             </div>
           </div>
@@ -216,18 +216,18 @@ function NoteCard({
               </option>
             ))}
         </select>
-        <div className="flex gap-2">
-          <button
-            onClick={() => setIsEditing(false)}
-            className="pop-button px-4 py-2 bg-gray-100 text-gray-700 rounded-xl font-medium"
-          >
-            キャンセル
-          </button>
+        <div className="flex gap-2 pt-4">
           <button
             onClick={handleSave}
             className="pop-button px-4 py-2 bg-gradient-to-r from-pink-500 to-rose-600 text-white rounded-xl font-medium"
           >
             保存
+          </button>
+          <button
+            onClick={() => setIsEditing(false)}
+            className="pop-button px-4 py-2 bg-gray-100 text-gray-700 rounded-xl font-medium"
+          >
+            キャンセル
           </button>
         </div>
       </div>

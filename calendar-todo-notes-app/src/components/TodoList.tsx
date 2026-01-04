@@ -173,19 +173,19 @@ export function TodoList() {
                 ))}
               </div>
             </div>
-            <div className="flex gap-2">
-              <button
-                onClick={() => setIsAdding(false)}
-                className="pop-button px-4 py-2 bg-gray-100 text-gray-700 rounded-xl font-medium"
-              >
-                キャンセル
-              </button>
+            <div className="flex gap-2 pt-4">
               <button
                 onClick={handleAddTodo}
                 disabled={!newTodo.title.trim()}
                 className="pop-button px-4 py-2 bg-gradient-to-r from-cyan-500 to-teal-600 text-white rounded-xl font-medium disabled:opacity-50"
               >
                 追加
+              </button>
+              <button
+                onClick={() => setIsAdding(false)}
+                className="pop-button px-4 py-2 bg-gray-100 text-gray-700 rounded-xl font-medium"
+              >
+                キャンセル
               </button>
             </div>
           </div>
@@ -303,18 +303,18 @@ function TodoItem({
             ))}
           </div>
         </div>
-        <div className="flex gap-2">
-          <button
-            onClick={() => setIsEditing(false)}
-            className="pop-button px-4 py-2 bg-gray-100 text-gray-700 rounded-xl font-medium"
-          >
-            キャンセル
-          </button>
+        <div className="flex gap-2 pt-4">
           <button
             onClick={handleSave}
             className="pop-button px-4 py-2 bg-gradient-to-r from-cyan-500 to-teal-600 text-white rounded-xl font-medium"
           >
             保存
+          </button>
+          <button
+            onClick={() => setIsEditing(false)}
+            className="pop-button px-4 py-2 bg-gray-100 text-gray-700 rounded-xl font-medium"
+          >
+            キャンセル
           </button>
         </div>
       </div>

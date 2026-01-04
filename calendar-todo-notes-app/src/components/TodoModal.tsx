@@ -140,20 +140,20 @@ export function TodoModal({ date, onClose }: TodoModalProps) {
             </div>
           </div>
 
-          <div className="flex gap-3 pt-4">
-            <button
-              type="button"
-              onClick={onClose}
-              className="pop-button flex-1 py-2 bg-gray-100 text-gray-700 rounded-xl font-medium hover:bg-gray-200"
-            >
-              キャンセル
-            </button>
+          <div className="flex gap-3 pt-6">
             <button
               type="submit"
               disabled={!title.trim()}
               className="pop-button flex-1 py-2 bg-gradient-to-r from-violet-500 to-purple-600 text-white rounded-xl font-medium disabled:opacity-50 disabled:cursor-not-allowed"
             >
               追加
+            </button>
+            <button
+              type="button"
+              onClick={onClose}
+              className="pop-button flex-1 py-2 bg-gray-100 text-gray-700 rounded-xl font-medium hover:bg-gray-200"
+            >
+              キャンセル
             </button>
           </div>
         </form>
