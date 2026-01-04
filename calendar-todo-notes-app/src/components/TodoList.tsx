@@ -131,6 +131,7 @@ export function TodoList() {
               className="w-full px-4 py-2 rounded-xl border-2 border-gray-200 focus:border-cyan-400 focus:outline-none resize-none"
             />
             <div className="flex flex-wrap gap-3 items-center">
+              <span className="text-sm font-medium text-gray-600">日時:</span>
               <input
                 type="date"
                 value={newTodo.dueDate}
@@ -152,6 +153,9 @@ export function TodoList() {
                   className="px-3 py-2 rounded-xl border-2 border-gray-200 focus:border-cyan-400 focus:outline-none"
                 />
               </div>
+            </div>
+            <div className="flex flex-wrap gap-3 items-center">
+              <span className="text-sm font-medium text-gray-600">優先度:</span>
               <div className="flex gap-1">
                 {(['high', 'medium', 'low'] as Priority[]).map((p) => (
                   <button
@@ -257,6 +261,7 @@ function TodoItem({
           className="w-full px-4 py-2 rounded-xl border-2 border-gray-200 focus:border-cyan-400 focus:outline-none resize-none"
         />
         <div className="flex flex-wrap gap-3 items-center">
+          <span className="text-sm font-medium text-gray-600">日時:</span>
           <input
             type="date"
             value={editData.dueDate}
@@ -278,6 +283,9 @@ function TodoItem({
               className="px-3 py-2 rounded-xl border-2 border-gray-200 focus:border-cyan-400 focus:outline-none"
             />
           </div>
+        </div>
+        <div className="flex flex-wrap gap-3 items-center">
+          <span className="text-sm font-medium text-gray-600">優先度:</span>
           <div className="flex gap-1">
             {(['high', 'medium', 'low'] as Priority[]).map((p) => (
               <button
