@@ -334,26 +334,28 @@ function TodoItem({
         </button>
 
         <div className="flex-1 min-w-0">
-          <div className="flex items-center gap-2 flex-wrap">
-            <h3
-              className={`font-medium ${
-                todo.completed ? 'line-through text-gray-400' : 'text-gray-800'
-              }`}
-            >
-              {todo.title}
-            </h3>
-            <span
-              className={`px-2 py-0.5 rounded-full text-xs font-medium ${config.bgColor} ${config.textColor}`}
-            >
-              {config.label}
-            </span>
-          </div>
+          <h3
+            className={`font-medium ${
+              todo.completed ? 'line-through text-gray-400' : 'text-gray-800'
+            }`}
+          >
+            {todo.title}
+          </h3>
           {todo.description && (
             <p className="text-sm text-gray-500 mt-1">{todo.description}</p>
           )}
-          <p className="text-xs text-gray-400 mt-2">
-            📅 {formatDisplayDate(todo.dueDate, todo.startTime, todo.endTime)}
-          </p>
+          <div className="flex flex-col gap-1 mt-2 text-xs text-gray-500">
+            <p>
+              <span className="font-medium text-gray-600">日時:</span>{' '}
+              {formatDisplayDate(todo.dueDate, todo.startTime, todo.endTime)}
+            </p>
+            <p>
+              <span className="font-medium text-gray-600">優先度:</span>{' '}
+              <span className={`px-2 py-0.5 rounded-full font-medium ${config.bgColor} ${config.textColor}`}>
+                {config.label}
+              </span>
+            </p>
+          </div>
         </div>
 
         <div className="flex gap-1">
