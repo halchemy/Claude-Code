@@ -185,25 +185,26 @@ export function Calendar() {
             );
           })}
         </div>
+
+        <div className="flex items-center justify-center gap-6 mt-4">
+          <button
+            onClick={goToPrevMonth}
+            className="pop-button w-10 h-10 flex items-center justify-center bg-gray-100 rounded-full hover:bg-gray-200"
+          >
+            ←
+          </button>
+          <button
+            onClick={goToNextMonth}
+            className="pop-button w-10 h-10 flex items-center justify-center bg-gray-100 rounded-full hover:bg-gray-200"
+          >
+            →
+          </button>
+        </div>
       </div>
 
-      <div className="flex items-center justify-center gap-6 mt-4">
-        <button
-          onClick={goToPrevMonth}
-          className="pop-button w-10 h-10 flex items-center justify-center bg-white rounded-full pop-shadow-sm hover:bg-gray-50"
-        >
-          ←
-        </button>
-        <p className="text-sm text-gray-500">
-          日付をクリックでTodo確認・追加
-        </p>
-        <button
-          onClick={goToNextMonth}
-          className="pop-button w-10 h-10 flex items-center justify-center bg-white rounded-full pop-shadow-sm hover:bg-gray-50"
-        >
-          →
-        </button>
-      </div>
+      <p className="text-center text-sm text-gray-500 mt-4">
+        日付をクリックでTodo確認・追加
+      </p>
 
       {isPopupOpen && selectedDateForTodo && (
         <DateTodoPopup
