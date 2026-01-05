@@ -117,32 +117,16 @@ export function Calendar() {
 
   return (
     <div className="flex flex-col h-full">
-      <div className="flex items-center justify-between mb-6">
-        <div className="flex items-center gap-4">
-          <h2 className="text-2xl font-bold text-gray-800">
-            {year}年 {MONTHS[month]}
-          </h2>
-          <button
-            onClick={goToToday}
-            className="pop-button px-3 py-1 text-sm bg-violet-100 text-violet-700 rounded-full hover:bg-violet-200"
-          >
-            今日
-          </button>
-        </div>
-        <div className="flex gap-2">
-          <button
-            onClick={goToPrevMonth}
-            className="pop-button w-10 h-10 flex items-center justify-center bg-white rounded-full pop-shadow-sm hover:bg-gray-50"
-          >
-            ←
-          </button>
-          <button
-            onClick={goToNextMonth}
-            className="pop-button w-10 h-10 flex items-center justify-center bg-white rounded-full pop-shadow-sm hover:bg-gray-50"
-          >
-            →
-          </button>
-        </div>
+      <div className="flex items-center gap-4 mb-6">
+        <h2 className="text-2xl font-bold text-gray-800">
+          {year}年 {MONTHS[month]}
+        </h2>
+        <button
+          onClick={goToToday}
+          className="pop-button px-3 py-1 text-sm bg-violet-100 text-violet-700 rounded-full hover:bg-violet-200"
+        >
+          今日
+        </button>
       </div>
 
       <div className="bg-white rounded-2xl pop-shadow p-4 flex-1">
@@ -203,9 +187,23 @@ export function Calendar() {
         </div>
       </div>
 
-      <p className="text-center text-sm text-gray-500 mt-4">
-        日付をクリックでTodo確認・追加
-      </p>
+      <div className="flex items-center justify-center gap-6 mt-4">
+        <button
+          onClick={goToPrevMonth}
+          className="pop-button w-10 h-10 flex items-center justify-center bg-white rounded-full pop-shadow-sm hover:bg-gray-50"
+        >
+          ←
+        </button>
+        <p className="text-sm text-gray-500">
+          日付をクリックでTodo確認・追加
+        </p>
+        <button
+          onClick={goToNextMonth}
+          className="pop-button w-10 h-10 flex items-center justify-center bg-white rounded-full pop-shadow-sm hover:bg-gray-50"
+        >
+          →
+        </button>
+      </div>
 
       {isPopupOpen && selectedDateForTodo && (
         <DateTodoPopup
